@@ -1,6 +1,7 @@
 package MyMethods;
 
 import School.Bag;
+import School.PencilBox;
 
 import java.util.Random;
 
@@ -111,6 +112,8 @@ public class MyCollections
                 String[] colors = getColors();
                 nn = random.nextInt( colors.length);
                 bag.color = colors[nn];
+
+                bag.pencilBox = new PencilBox();
 
                 return bag;
             }
