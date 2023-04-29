@@ -13,6 +13,7 @@ public class Task61
                     {
                         System.out.println(scanner.nextLine());
                     }
+                scanner.close();
 
             }
     }

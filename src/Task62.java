@@ -16,5 +16,6 @@ public class Task62
                     {
                         System.out.println(scanner.nextLine());
                     }
+                scanner.close();
             }
     }
