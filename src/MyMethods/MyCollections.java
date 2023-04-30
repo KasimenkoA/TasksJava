@@ -117,4 +117,14 @@ public class MyCollections
 
                 return bag;
             }
+
+        public static PencilBox[] getPencilBoxItems()
+            {
+                PencilBox[] pencilBoxes = new PencilBox[20];
+                for (int i = 0; i < pencilBoxes.length; i++)
+                    {
+                        pencilBoxes[i] = new PencilBox();
+                    }
+                return pencilBoxes;
+            }
     }
