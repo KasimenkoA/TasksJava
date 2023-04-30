@@ -5,11 +5,11 @@ public class Task65
     {
         public static void main( String[] args )
             {
-                PencilBox[] pencilBoxes = MyCollections.getPencilBoxItems();
+                String[] items = MyCollections.getPencilBoxItems();
 
-                for (PencilBox pencilBox : pencilBoxes)
+                for (String ss : items)
                     {
-                        pencilBox.getInfo();
+                        System.out.println(ss);
                     }
             }
     }

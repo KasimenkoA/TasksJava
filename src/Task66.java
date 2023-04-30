@@ -5,10 +5,10 @@ public class Task66
     {
         public static void main( String[] args )
             {
-                PencilBox[] pencilBoxes = MyCollections.getRandomPencilBoxItems();
-                for (PencilBox pencilBox : pencilBoxes)
+                String[] items = MyCollections.getRandomPencilBoxItems();
+                for (String ss : items)
                     {
-                        pencilBox.getInfo();
+                        System.out.println(ss);
                     }
             }
     }

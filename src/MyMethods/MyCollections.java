@@ -118,31 +118,48 @@ public class MyCollections
                 return bag;
             }
 
-        public static PencilBox[] getPencilBoxItems()
+        public static String[] getPencilBoxItems()
             {
-                PencilBox[] pencilBoxes = new PencilBox[20];
-                for (int i = 0; i < pencilBoxes.length; i++)
-                    {
-                        pencilBoxes[i] = new PencilBox();
-                    }
-                return pencilBoxes;
+                String[] items = new String[20];
+                items[0] = "ручка синяя";
+                items[1] = "карандаш";
+                items[2] = "линейка";
+                items[3] = "циркуль";
+                items[4] = "резинка";
+                items[5] = "точилка";
+                items[6] = "ножницы";
+                items[7] = "транспортир";
+                items[8] = "маркер";
+                items[9] = "ластик";
+                items[10] = "клей-карандаш";
+                items[11] = "кисточка";
+                items[12] = "краски";
+                items[13] = "калькулятор";
+                items[14] = "фломастеры";
+                items[15] = "клей";
+                items[16] = "ручка красная";
+                items[17] = "ручка черная";
+                items[18] = "скрепки";
+                items[19] = "закладки";
+
+                return items;
             }
 
-        public static PencilBox[] getRandomPencilBoxItems()
+        public static String[] getRandomPencilBoxItems()
             {
                 int size = 5;
-                PencilBox[] pencilBoxes = getPencilBoxItems();
-                PencilBox[] pencilBoxesNew = new PencilBox[size];
+                String[] items = getPencilBoxItems();
+                String[] itemsNew = new String[size];
 
                 int nn;
                 Random random = new Random();
 
                 for (int i = 0; i < size; i++)
                     {
-                        nn = random.nextInt(pencilBoxes.length);
-                        pencilBoxesNew[i] = pencilBoxes[nn];
+                        nn = random.nextInt(items.length);
+                        itemsNew[i] = items[nn];
                     }
 
-                return pencilBoxesNew;
+                return itemsNew;
             }
     }
