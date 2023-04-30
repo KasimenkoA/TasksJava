@@ -162,4 +162,21 @@ public class MyCollections
 
                 return itemsNew;
             }
+
+        public static String[] getTextbooks()
+            {
+                String[] items = new String[10];
+                items[0] = "Русский язык";
+                items[1] = "Математика";
+                items[2] = "Окружающий мир";
+                items[3] = "Литературное чтение";
+                items[4] = "История";
+                items[5] = "География";
+                items[6] = "Биология";
+                items[7] = "Физика";
+                items[8] = "Информатика";
+                items[9] = "Английский";
+
+                return items;
+            }
     }
