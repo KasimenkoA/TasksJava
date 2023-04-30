@@ -179,4 +179,22 @@ public class MyCollections
 
                 return items;
             }
+
+        public static String[] getRandomTextbooks()
+            {
+                int size = 5;
+                String[] items = getTextbooks();
+                String[] itemsNew = new String[size];
+
+                int nn;
+                Random random = new Random();
+
+                for (int i = 0; i < size; i++)
+                    {
+                        nn = random.nextInt(items.length);
+                        itemsNew[i] = items[nn];
+                    }
+
+                return itemsNew;
+            }
     }
