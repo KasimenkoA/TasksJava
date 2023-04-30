@@ -127,4 +127,22 @@ public class MyCollections
                     }
                 return pencilBoxes;
             }
+
+        public static PencilBox[] getRandomPencilBoxItems()
+            {
+                int size = 5;
+                PencilBox[] pencilBoxes = getPencilBoxItems();
+                PencilBox[] pencilBoxesNew = new PencilBox[size];
+
+                int nn;
+                Random random = new Random();
+
+                for (int i = 0; i < size; i++)
+                    {
+                        nn = random.nextInt(pencilBoxes.length);
+                        pencilBoxesNew[i] = pencilBoxes[nn];
+                    }
+
+                return pencilBoxesNew;
+            }
     }
