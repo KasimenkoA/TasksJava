@@ -1,6 +1,17 @@
 package Draw;
 
 import javax.swing.*;
+import java.awt.*;
+
+class MyPanel extends JPanel
+    {
+        @Override
+        protected void paintComponent( Graphics g )
+            {
+                super.paintComponent( g );
+                g.drawOval( 100,100,80,80 );
+            }
+    }
 
 public class MyFrame1 extends JFrame
     {
@@ -15,6 +26,10 @@ public class MyFrame1 extends JFrame
         public static void main( String[] args )
             {
                 MyFrame1 myFrame = new MyFrame1();
+
+                MyPanel myPanel = new MyPanel();
+                myFrame.add( myPanel );
+
                 myFrame.setVisible( true );
             }
     }
