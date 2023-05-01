@@ -114,6 +114,7 @@ public class MyCollections
                 bag.color = colors[nn];
 
                 bag.pencilBox = new PencilBox();
+                bag.textBooks = getRandomTextbooks();
 
                 return bag;
             }
