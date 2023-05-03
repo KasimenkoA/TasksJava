@@ -12,11 +12,20 @@ class MyPanel extends JPanel
                 super.paintComponent( g );
                 //g.drawOval( 100,100,80,80 );
 
-                g.drawLine( 100,300,200,100 );
-                g.drawLine( 200,100,300,300 );
-                g.drawLine( 300,300,100,150 );
-                g.drawLine( 100,150,300,150 );
-                g.drawLine( 300,150,100,300 );
+//                g.drawLine( 100,300,200,100 );
+//                g.drawLine( 200,100,300,300 );
+//                g.drawLine( 300,300,100,150 );
+//                g.drawLine( 100,150,300,150 );
+//                g.drawLine( 300,150,100,300 );
+
+                for (int y = 50; y < 250; y += 100)
+                    {
+                        for (int x = 50; x < 400; x += 150)
+                            {
+                                g.drawRect( x,y,150,100 );
+                            }
+                    }
+
             }
     }
 public class MyFrame1 extends JFrame
