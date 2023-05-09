@@ -2,6 +2,8 @@ package Draw;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class MyFrameGlobal extends JFrame
     {
@@ -15,7 +17,18 @@ public class MyFrameGlobal extends JFrame
                 JPanel panelButton = new JPanel();
                 panelButton.setLayout( new GridLayout(2,4) );
 
+                PanelDraw panelDraw = new PanelDraw();
+                panelDraw.setPreferredSize(new Dimension(600,400));
+
                 JButton button1 = new JButton("Button 1");
+                button1.addActionListener( new ActionListener()
+                    {
+                        @Override
+                        public void actionPerformed( ActionEvent e )
+                            {
+                                panelDraw.drawMyOval();
+                            }
+                    } );
                 panelButton.add( button1 );
 
                 JButton button2 = new JButton(("Button 2"));
@@ -40,6 +53,9 @@ public class MyFrameGlobal extends JFrame
                 panelButton.add( button8 );
 
                 add( panelButton , BorderLayout.NORTH);
+
+
+                add( panelDraw, BorderLayout.SOUTH );
             }
 
 
@@ -49,4 +65,16 @@ public class MyFrameGlobal extends JFrame
                 MyFrameGlobal frame = new MyFrameGlobal();
                 frame.setVisible( true );
             }
+
+        public static class PanelDraw extends JPanel
+            {
+                public void drawMyOval()
+                    {
+                        Graphics g = getGraphics();
+                        g.setColor( Color.blue );
+                        g.fillOval( 200,150, 90,80 );
+                    }
+            }
+
+
     }
