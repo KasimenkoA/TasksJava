@@ -7,6 +7,9 @@ import java.awt.event.ActionListener;
 
 public class MyFrameGlobal extends JFrame
     {
+        public static int curX;
+        public static int curY;
+
         PanelDraw panelDraw;
         JButton button1;
         JButton button2;
@@ -43,6 +46,7 @@ public class MyFrameGlobal extends JFrame
                 panelButton.add( button1 );
 
                 button2 = new JButton(("Button 2"));
+                button2.addActionListener( new MyActionListener() );
                 panelButton.add( button2 );
 
                 button3 = new JButton(("Button 3"));
@@ -77,6 +81,10 @@ public class MyFrameGlobal extends JFrame
                             {
                                 panelDraw.drawMyOval();
                             }
+                        else if (e.getSource() == button2)
+                            {
+                                panelDraw.moveOval();
+                            }
                     }
             }
 
@@ -95,6 +103,39 @@ public class MyFrameGlobal extends JFrame
                         Graphics g = getGraphics();
                         g.setColor( Color.blue );
                         g.fillOval( 200,150, 90,80 );
+                    }
+
+                public void moveOval()
+                    {
+                        Graphics g = getGraphics();
+                        g.setColor( Color.green );
+
+                        curX = 0;
+                        curY = 0;
+
+                        while (true)
+                            {
+                                g.clearRect( 0,0, getWidth(),getHeight() );
+
+                                g.fillOval( curX,curY, 90,80 );
+                                try
+                                    {
+                                        Thread.sleep( 10 );
+                                    } catch (InterruptedException e)
+                                    {
+                                        e.printStackTrace();
+                                    }
+
+                                curX++;
+                                curY++;
+
+                                if (curX >= getWidth() || curY >= getHeight())
+                                    {
+                                        break;
+                                    }
+                            }
+
+
                     }
             }
 
