@@ -50,6 +50,7 @@ public class MyFrameGlobal extends JFrame
                 panelButton.add( button2 );
 
                 button3 = new JButton(("Button 3"));
+                button3.addActionListener( new MyActionListener() );
                 panelButton.add( button3 );
 
                 button4 = new JButton(("Button 4"));
@@ -84,6 +85,10 @@ public class MyFrameGlobal extends JFrame
                         else if (e.getSource() == button2)
                             {
                                 panelDraw.moveOval();
+                            }
+                        else if (e.getSource() == button3)
+                            {
+                                panelDraw.rotateRectangle();
                             }
                     }
             }
@@ -134,8 +139,45 @@ public class MyFrameGlobal extends JFrame
                                         break;
                                     }
                             }
+                    }
+
+                public void rotateRectangle()
+                    {
+                        Graphics g = getGraphics();
+                        Graphics2D g2d = (Graphics2D)g;
+                        g2d.setColor( Color.CYAN );
+                        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 
+                        int rSize = 80;
+
+                        int angle = 0;
+                        int angleStep = 1;
+                        int count = 0;
+
+                        while (count < 3)
+                            {
+                                g2d.clearRect( 0,0, getWidth(), getHeight() );
+                                g2d.rotate( Math.toRadians( angleStep ) ,getWidth()/2,getHeight()/2 );
+                                g2d.fillRect( getWidth()/2 - rSize/2,getHeight()/2 - rSize/2,rSize,rSize );
+
+                                try
+                                    {
+                                        Thread.sleep( 10 );
+                                    } catch (InterruptedException e)
+                                    {
+                                        e.printStackTrace();
+                                    }
+
+                                angle += angleStep;
+                                if (angle>360)
+                                    {
+                                        angle = angleStep;
+                                        count++;
+                                    }
+
+                            }
+                        g2d.clearRect( 0,0, getWidth(), getHeight() );
                     }
             }
 
