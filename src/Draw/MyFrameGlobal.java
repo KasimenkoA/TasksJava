@@ -1,5 +1,7 @@
 package Draw;
 
+import MyMethods.MyCollections;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -54,6 +56,7 @@ public class MyFrameGlobal extends JFrame
                 panelButton.add( button3 );
 
                 button4 = new JButton(("Button 4"));
+                button4.addActionListener( new MyActionListener() );
                 panelButton.add( button4 );
 
                 button5 = new JButton(("Button 5"));
@@ -89,6 +92,10 @@ public class MyFrameGlobal extends JFrame
                         else if (e.getSource() == button3)
                             {
                                 panelDraw.rotateRectangle();
+                            }
+                        else if (e.getSource() == button4)
+                            {
+                                panelDraw.changeColor();
                             }
                     }
             }
@@ -178,6 +185,11 @@ public class MyFrameGlobal extends JFrame
 
                             }
                         g2d.clearRect( 0,0, getWidth(), getHeight() );
+                    }
+
+                public void changeColor()
+                    {
+                        setBackground( MyCollections.getRandomColor() );
                     }
             }
 
