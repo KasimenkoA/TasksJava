@@ -210,4 +210,40 @@ public class MyCollections
 
                 return new Color( red,green,blue );
             }
+
+        public static Color getNextRandomColor(Color color)
+            {
+                int red = color.getRed();
+                int green = color.getGreen();
+                int blue = color.getBlue();
+
+                Random random = new Random();
+
+                int nn = random.nextInt(3);
+                int sign = random.nextInt(2);
+                int step = (sign==0)?-50:50;
+
+
+                if (nn == 0)
+                    {
+                        red = red + step;
+                        if(red<0) red = 75;
+                        if(red>255) red = 180;
+                    }
+                else if (nn == 1)
+                    {
+                        green = green + step;
+                        if(green<0) green = 75;
+                        if(green>255) green = 180;
+                    }
+                else if (nn == 2)
+                    {
+                        blue = blue + step;
+                        if(blue<0) blue = 75;
+                        if(blue>255) blue = 180;
+                    }
+
+
+                return new Color( red,green,blue );
+            }
     }

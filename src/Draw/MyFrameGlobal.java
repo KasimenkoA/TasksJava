@@ -25,17 +25,17 @@ public class MyFrameGlobal extends JFrame
         public MyFrameGlobal()
             {
                 setTitle( "My global frame" );
-                setSize( 600,500 );
+                setSize( 600, 500 );
                 setLocationRelativeTo( null );
                 setDefaultCloseOperation( EXIT_ON_CLOSE );
 
                 JPanel panelButton = new JPanel();
-                panelButton.setLayout( new GridLayout(2,4) );
+                panelButton.setLayout( new GridLayout( 2, 4 ) );
 
                 panelDraw = new PanelDraw();
-                panelDraw.setPreferredSize(new Dimension(600,400));
+                panelDraw.setPreferredSize( new Dimension( 600, 400 ) );
 
-                button1 = new JButton("Button 1");
+                button1 = new JButton( "Button 1" );
 //                button1.addActionListener( new ActionListener()
 //                    {
 //                        @Override
@@ -44,35 +44,35 @@ public class MyFrameGlobal extends JFrame
 //                                panelDraw.drawMyOval();
 //                            }
 //                    } );
-                button1.addActionListener(new MyActionListener());
+                button1.addActionListener( new MyActionListener() );
                 panelButton.add( button1 );
 
-                button2 = new JButton(("Button 2"));
+                button2 = new JButton( ("Button 2") );
                 button2.addActionListener( new MyActionListener() );
                 panelButton.add( button2 );
 
-                button3 = new JButton(("Button 3"));
+                button3 = new JButton( ("Button 3") );
                 button3.addActionListener( new MyActionListener() );
                 panelButton.add( button3 );
 
-                button4 = new JButton(("Button 4"));
+                button4 = new JButton( ("Button 4") );
                 button4.addActionListener( new MyActionListener() );
                 panelButton.add( button4 );
 
-                button5 = new JButton(("Button 5"));
+                button5 = new JButton( ("Button 5") );
                 panelButton.add( button5 );
 
-                button6 = new JButton(("Button 6"));
+                button6 = new JButton( ("Button 6") );
                 panelButton.add( button6 );
 
-                button7 = new JButton(("Button 7"));
+                button7 = new JButton( ("Button 7") );
                 panelButton.add( button7 );
 
-                button8 = new JButton(("Button 8"));
+                button8 = new JButton( ("Button 8") );
                 panelButton.add( button8 );
 
 
-                add( panelButton , BorderLayout.NORTH);
+                add( panelButton, BorderLayout.NORTH );
                 add( panelDraw, BorderLayout.SOUTH );
             }
 
@@ -114,7 +114,7 @@ public class MyFrameGlobal extends JFrame
                     {
                         Graphics g = getGraphics();
                         g.setColor( Color.blue );
-                        g.fillOval( 200,150, 90,80 );
+                        g.fillOval( 200, 150, 90, 80 );
                     }
 
                 public void moveOval()
@@ -127,9 +127,9 @@ public class MyFrameGlobal extends JFrame
 
                         while (true)
                             {
-                                g.clearRect( 0,0, getWidth(),getHeight() );
+                                g.clearRect( 0, 0, getWidth(), getHeight() );
 
-                                g.fillOval( curX,curY, 90,80 );
+                                g.fillOval( curX, curY, 90, 80 );
                                 try
                                     {
                                         Thread.sleep( 10 );
@@ -151,9 +151,9 @@ public class MyFrameGlobal extends JFrame
                 public void rotateRectangle()
                     {
                         Graphics g = getGraphics();
-                        Graphics2D g2d = (Graphics2D)g;
+                        Graphics2D g2d = (Graphics2D) g;
                         g2d.setColor( Color.CYAN );
-                        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                        g2d.setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
 
 
                         int rSize = 80;
@@ -164,9 +164,9 @@ public class MyFrameGlobal extends JFrame
 
                         while (count < 3)
                             {
-                                g2d.clearRect( 0,0, getWidth(), getHeight() );
-                                g2d.rotate( Math.toRadians( angleStep ) ,getWidth()/2,getHeight()/2 );
-                                g2d.fillRect( getWidth()/2 - rSize/2,getHeight()/2 - rSize/2,rSize,rSize );
+                                g2d.clearRect( 0, 0, getWidth(), getHeight() );
+                                g2d.rotate( Math.toRadians( angleStep ), getWidth() / 2, getHeight() / 2 );
+                                g2d.fillRect( getWidth() / 2 - rSize / 2, getHeight() / 2 - rSize / 2, rSize, rSize );
 
                                 try
                                     {
@@ -177,21 +177,35 @@ public class MyFrameGlobal extends JFrame
                                     }
 
                                 angle += angleStep;
-                                if (angle>360)
+                                if (angle > 360)
                                     {
                                         angle = angleStep;
                                         count++;
                                     }
 
                             }
-                        g2d.clearRect( 0,0, getWidth(), getHeight() );
+                        g2d.clearRect( 0, 0, getWidth(), getHeight() );
                     }
 
                 public void changeColor()
                     {
-                        setBackground( MyCollections.getRandomColor() );
+                        new Thread( () ->
+                        {
+                            Color curColor = MyCollections.getRandomColor();
+                            for (int i = 0; i < 100; i++)
+                                {
+                                    setBackground( curColor );
+                                    try
+                                        {
+                                            Thread.sleep( 100 );
+                                        } catch (InterruptedException e)
+                                        {
+                                            e.printStackTrace();
+                                        }
+                                    curColor = MyCollections.getNextRandomColor( curColor );
+                                }
+                        } ).start();
                     }
             }
-
 
     }
