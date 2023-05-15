@@ -60,6 +60,7 @@ public class MyFrameGlobal extends JFrame
                 panelButton.add( button4 );
 
                 button5 = new JButton( ("Button 5") );
+                button5.addActionListener( new MyActionListener() );
                 panelButton.add( button5 );
 
                 button6 = new JButton( ("Button 6") );
@@ -96,6 +97,10 @@ public class MyFrameGlobal extends JFrame
                         else if (e.getSource() == button4)
                             {
                                 panelDraw.changeColor();
+                            }
+                        else if (e.getSource() == button5)
+                            {
+                                panelDraw.drawArcCircle();
                             }
                     }
             }
@@ -205,6 +210,23 @@ public class MyFrameGlobal extends JFrame
                                     curColor = MyCollections.getNextRandomColor( curColor );
                                 }
                         } ).start();
+                    }
+
+                public void drawArcCircle()
+                    {
+                        Graphics g = getGraphics();
+
+                        g.setColor( Color.red );
+                        g.fillArc( 50, 50, 300,300, 0, 90 );
+
+                        g.setColor( Color.green );
+                        g.fillArc( 50, 50, 300,300, 90, 90 );
+
+                        g.setColor( Color.blue );
+                        g.fillArc( 50, 50, 300,300, 180, 90 );
+
+                        g.setColor( Color.yellow );
+                        g.fillArc( 50, 50, 300,300, 270, 90 );
                     }
             }
 
