@@ -64,6 +64,7 @@ public class MyFrameGlobal extends JFrame
                 panelButton.add( button5 );
 
                 button6 = new JButton( ("Button 6") );
+                button6.addActionListener( new MyActionListener() );
                 panelButton.add( button6 );
 
                 button7 = new JButton( ("Button 7") );
@@ -101,6 +102,10 @@ public class MyFrameGlobal extends JFrame
                         else if (e.getSource() == button5)
                             {
                                 panelDraw.drawArcCircle();
+                            }
+                        else if (e.getSource() == button6)
+                            {
+                                panelDraw.CircleToPoint();
                             }
                     }
             }
@@ -227,6 +232,31 @@ public class MyFrameGlobal extends JFrame
 
                         g.setColor( Color.yellow );
                         g.fillArc( 50, 50, 300,300, 270, 90 );
+                    }
+
+                public void CircleToPoint()
+                    {
+                        new Thread( () ->
+                        {
+                            int size = 100;
+                            Graphics g = getGraphics();
+                            g.setColor( Color.green );
+
+                            for (int i = 0; i < 100; i++)
+                                {
+                                    g.fillOval( 100,100, size,size );
+                                    try
+                                        {
+                                            Thread.sleep( 100 );
+                                        } catch (InterruptedException e)
+                                        {
+                                            e.printStackTrace();
+                                        }
+                                    g.clearRect( 100,100,100,100 );
+                                    size--;
+                                }
+                        } ).start();
+
                     }
             }
 
