@@ -68,6 +68,7 @@ public class MyFrameGlobal extends JFrame
                 panelButton.add( button6 );
 
                 button7 = new JButton( ("Button 7") );
+                button7.addActionListener( new MyActionListener() );
                 panelButton.add( button7 );
 
                 button8 = new JButton( ("Button 8") );
@@ -107,6 +108,11 @@ public class MyFrameGlobal extends JFrame
                             {
                                 panelDraw.CircleToPoint();
                             }
+                        else if (e.getSource() == button7)
+                            {
+                                panelDraw.squareMoving();
+                            }
+
                     }
             }
 
@@ -257,6 +263,49 @@ public class MyFrameGlobal extends JFrame
                                 }
                         } ).start();
 
+                    }
+
+                public void squareMoving()
+                    {
+                        Graphics g = getGraphics();
+                        g.setColor( Color.magenta );
+
+                        int xx = 100;
+                        int yy = 100;
+
+                        int dx = 0;
+                        int dy = 0;
+                        int direction = 0;
+
+
+                        while (direction < 4)
+                            {
+                                switch (direction)
+                                    {
+                                        case 0: dx=1;dy=0;break;  // right
+                                        case 1: dx=0;dy=1;break;  // down
+                                        case 2: dx=-1;dy=0;break; // left
+                                        case 3: dx=0;dy=-1;break; // up
+                                    }
+
+                                for (int i = 0; i < 100; i++)
+                                    {
+                                        g.fillRect( xx,yy,50,50 );
+                                        try
+                                            {
+                                                Thread.sleep( 50 );
+                                            } catch (InterruptedException e)
+                                            {
+                                                e.printStackTrace();
+                                            }
+                                        g.clearRect( xx,yy,50,50 );
+
+                                        xx += dx;
+                                        yy += dy;
+                                    }
+
+                                direction++;
+                            }
                     }
             }
 
