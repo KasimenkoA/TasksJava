@@ -72,6 +72,7 @@ public class MyFrameGlobal extends JFrame
                 panelButton.add( button7 );
 
                 button8 = new JButton( ("Button 8") );
+                button8.addActionListener( new MyActionListener() );
                 panelButton.add( button8 );
 
 
@@ -111,6 +112,10 @@ public class MyFrameGlobal extends JFrame
                         else if (e.getSource() == button7)
                             {
                                 panelDraw.squareMoving();
+                            }
+                        else if (e.getSource() == button8)
+                            {
+                                panelDraw.setBackgroundColor();
                             }
 
                     }
@@ -305,6 +310,16 @@ public class MyFrameGlobal extends JFrame
                                     }
 
                                 direction++;
+                            }
+                    }
+
+                public void setBackgroundColor()
+                    {
+                        Color curColor = JColorChooser.showDialog( this,"Select color",Color.white );
+
+                        if (curColor != null)
+                            {
+                                setBackground( curColor );
                             }
                     }
             }
