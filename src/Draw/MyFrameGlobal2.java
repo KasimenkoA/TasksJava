@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.Ellipse2D;
+import java.util.ArrayList;
 
 public class MyFrameGlobal2 extends JFrame
     {
@@ -17,6 +19,7 @@ public class MyFrameGlobal2 extends JFrame
         JButton button7;
         JButton button8;
 
+
         public MyFrameGlobal2()
             {
                 setTitle( "My global frame" );
@@ -28,9 +31,9 @@ public class MyFrameGlobal2 extends JFrame
                 panelButton.setLayout( new GridLayout( 2, 4 ) );
 
                 panelDraw = new PanelDraw();
-                panelDraw.setPreferredSize( new Dimension( 600, 400 ) );
 
                 button1 = new JButton( "Button 1" );
+                button1.addActionListener( new MyActionListener() );
                 panelButton.add( button1 );
 
                 button2 = new JButton( ("Button 2") );
@@ -64,22 +67,59 @@ public class MyFrameGlobal2 extends JFrame
                 @Override
                 public void actionPerformed( ActionEvent e )
                     {
-
-
+                        if (e.getSource() == button1)
+                            {
+                                panelDraw.drawCircle();
+                            }
                     }
             }
 
-
-        public static void main( String[] args )
+        public static class MyCanvas extends Canvas
             {
-                MyFrameGlobal2 frame = new MyFrameGlobal2();
-                frame.setVisible( true );
+                private ArrayList<Shape> shapes;
+
+                public MyCanvas()
+                    {
+                        shapes = new ArrayList<>();
+                    }
+
+                @Override
+                public void paint( Graphics g )
+                    {
+                        Graphics2D g2d = (Graphics2D) g;
+                        for (Shape shape: shapes)
+                            {
+                                g2d.fill(shape);
+                            }
+                    }
             }
 
 
         public static class PanelDraw extends JPanel
             {
+                private MyCanvas canvas;
 
+                public PanelDraw()
+                    {
+                        setPreferredSize( new Dimension( 600, 400 ) );
+                        canvas = new MyCanvas();
+                        canvas.setPreferredSize( new Dimension( 600, 400 ) );
+                        add( canvas, BorderLayout.CENTER );
+                    }
+
+                public void drawCircle()
+                    {
+                        Ellipse2D ellipse2D =  new Ellipse2D.Double(100,100,60,60);
+                        canvas.shapes.add( ellipse2D );
+
+                        canvas.repaint();
+                    }
+            }
+
+        public static void main( String[] args )
+            {
+                MyFrameGlobal2 frame = new MyFrameGlobal2();
+                frame.setVisible( true );
             }
 
     }
