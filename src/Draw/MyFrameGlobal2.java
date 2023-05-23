@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Path2D;
 import java.util.ArrayList;
 
 public class MyFrameGlobal2 extends JFrame
@@ -30,13 +31,22 @@ public class MyFrameGlobal2 extends JFrame
                 JPanel panelButton = new JPanel();
                 panelButton.setLayout( new GridLayout( 2, 4 ) );
 
-                panelDraw = new PanelDraw();
+                JPanel panelEdit = new JPanel();
+                panelEdit.setPreferredSize( new Dimension(600,200) );
+                JLabel label = new JLabel("Width:");
+                panelEdit.add( label );
+                JTextField textField = new JTextField("10");
+                textField.setColumns( 5 );
+                panelEdit.add( textField );
+
+                panelDraw = new PanelDraw(textField);
 
                 button1 = new JButton( "Button 1" );
                 button1.addActionListener( new MyActionListener() );
                 panelButton.add( button1 );
 
                 button2 = new JButton( ("Button 2") );
+                button2.addActionListener( new MyActionListener() );
                 panelButton.add( button2 );
 
                 button3 = new JButton( ("Button 3") );
@@ -58,7 +68,9 @@ public class MyFrameGlobal2 extends JFrame
                 panelButton.add( button8 );
 
 
+                setLayout( new BorderLayout() );
                 add( panelButton, BorderLayout.NORTH );
+                add( panelEdit, BorderLayout.CENTER);
                 add( panelDraw, BorderLayout.SOUTH );
             }
 
@@ -71,6 +83,10 @@ public class MyFrameGlobal2 extends JFrame
                             {
                                 panelDraw.drawCircle();
                             }
+                        else if (e.getSource() == button2)
+                        {
+                            panelDraw.setEditSize();
+                        }
                     }
             }
 
@@ -97,20 +113,40 @@ public class MyFrameGlobal2 extends JFrame
 
         public static class PanelDraw extends JPanel
             {
+                private JTextField textField;
                 private MyCanvas canvas;
 
-                public PanelDraw()
+                public PanelDraw(JTextField textField)
                     {
-                        setPreferredSize( new Dimension( 600, 400 ) );
+                        setPreferredSize( new Dimension( 600, 300 ) );
                         canvas = new MyCanvas();
-                        canvas.setPreferredSize( new Dimension( 600, 400 ) );
+                        canvas.setPreferredSize( new Dimension( 600, 300 ) );
                         add( canvas, BorderLayout.CENTER );
+                        this.textField = textField;
                     }
 
                 public void drawCircle()
                     {
                         Ellipse2D ellipse2D =  new Ellipse2D.Double(100,100,60,60);
                         canvas.shapes.add( ellipse2D );
+
+                        canvas.repaint();
+                    }
+
+                public void setEditSize()
+                    {
+                        int size = Integer.parseInt( textField.getText() );
+
+                        for (Shape shape : canvas.shapes)
+                            {
+                                if (shape instanceof Ellipse2D)
+                                    {
+                                        Ellipse2D ellipse = (Ellipse2D) shape;
+                                        double newX = ellipse.getX() - (size - ellipse.getWidth()) / 2; // вычисляем новое положение X
+                                        double newY = ellipse.getY() - (size - ellipse.getHeight()) / 2; // вычисляем новое положение Y
+                                        ellipse.setFrame( newX,newY,size,size );
+                                    }
+                            }
 
                         canvas.repaint();
                     }
