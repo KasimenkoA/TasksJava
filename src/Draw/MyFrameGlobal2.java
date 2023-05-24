@@ -1,5 +1,7 @@
 package Draw;
 
+import MyMethods.MyCollections;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -32,7 +34,7 @@ public class MyFrameGlobal2 extends JFrame
                 panelButton.setLayout( new GridLayout( 2, 4 ) );
 
                 JPanel panelEdit = new JPanel();
-                panelEdit.setPreferredSize( new Dimension(600,200) );
+                panelEdit.setPreferredSize( new Dimension(600,100) );
                 JLabel label = new JLabel("Width:");
                 panelEdit.add( label );
                 JTextField textField = new JTextField("10");
@@ -50,6 +52,7 @@ public class MyFrameGlobal2 extends JFrame
                 panelButton.add( button2 );
 
                 button3 = new JButton( ("Button 3") );
+                button3.addActionListener( new MyActionListener() );
                 panelButton.add( button3 );
 
                 button4 = new JButton( ("Button 4") );
@@ -87,6 +90,10 @@ public class MyFrameGlobal2 extends JFrame
                         {
                             panelDraw.setEditSize();
                         }
+                        else if (e.getSource() == button3)
+                            {
+                                panelDraw.drawRandomCircle();
+                            }
                     }
             }
 
@@ -103,6 +110,7 @@ public class MyFrameGlobal2 extends JFrame
                 public void paint( Graphics g )
                     {
                         Graphics2D g2d = (Graphics2D) g;
+                        g2d.setColor( Color.CYAN );
                         for (Shape shape: shapes)
                             {
                                 g2d.fill(shape);
@@ -118,9 +126,9 @@ public class MyFrameGlobal2 extends JFrame
 
                 public PanelDraw(JTextField textField)
                     {
-                        setPreferredSize( new Dimension( 600, 300 ) );
+                        setPreferredSize( new Dimension( 600, 390 ) );
                         canvas = new MyCanvas();
-                        canvas.setPreferredSize( new Dimension( 600, 300 ) );
+                        canvas.setPreferredSize( new Dimension( 600, 390 ) );
                         add( canvas, BorderLayout.CENTER );
                         this.textField = textField;
                     }
@@ -147,6 +155,18 @@ public class MyFrameGlobal2 extends JFrame
                                         ellipse.setFrame( newX,newY,size,size );
                                     }
                             }
+
+                        canvas.repaint();
+                    }
+
+                public void drawRandomCircle()
+                    {
+                        int x = MyCollections.getRandomFromTo( 50,500 );
+                        int y = MyCollections.getRandomFromTo( 50,300 );
+                        int size = MyCollections.getRandomFromTo( 10,250 );
+
+                        Ellipse2D ellipse2D = new Ellipse2D.Double(x,y,size,size);
+                        canvas.shapes.add( ellipse2D );
 
                         canvas.repaint();
                     }
