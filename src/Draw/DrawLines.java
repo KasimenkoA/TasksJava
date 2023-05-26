@@ -3,6 +3,7 @@ package Draw;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 public class DrawLines extends JFrame
     {
@@ -11,12 +12,32 @@ public class DrawLines extends JFrame
         int endX;
         int endY;
 
+        ArrayList<MyLine> myLines;
+
+        private class MyLine
+            {
+                int startX;
+                int startY;
+                int endX;
+                int endY;
+
+                public MyLine( int startX, int startY, int endX, int endY )
+                    {
+                        this.startX = startX;
+                        this.startY = startY;
+                        this.endX = endX;
+                        this.endY = endY;
+                    }
+            }
+
         public DrawLines()
             {
                 setTitle( "Draw lines" );
                 setSize( 600, 500 );
                 setLocationRelativeTo( null );
                 setDefaultCloseOperation( EXIT_ON_CLOSE );
+
+                myLines = new ArrayList<>();
 
                 JPanel panel = new JPanel()
                     {
@@ -27,6 +48,11 @@ public class DrawLines extends JFrame
 
                                 g.setColor( Color.blue );
                                 g.drawLine( startX, startY, endX, endY );
+
+                                for (MyLine myLine : myLines)
+                                    {
+                                        g.drawLine( myLine.startX, myLine.startY, myLine.endX, myLine.endY );
+                                    }
                             }
                     };
 
@@ -46,6 +72,8 @@ public class DrawLines extends JFrame
                             {
                                 endX = e.getX();
                                 endY = e.getY();
+
+                                myLines.add( new MyLine( startX,startY,endX,endY ) );
                                 panel.repaint();
                             }
 
