@@ -41,6 +41,20 @@ public class MyFrameGlobal2 extends JFrame
                 textField.setColumns( 5 );
                 panelEdit.add( textField );
 
+                JLabel labelColor = new JLabel("Color:");
+                JButton buttonColor = new JButton("Select color");
+                buttonColor.addActionListener( new ActionListener()
+                    {
+                        @Override
+                        public void actionPerformed( ActionEvent e )
+                            {
+                                Color curColor = JColorChooser.showDialog( null,"Select color",Color.white );
+                                buttonColor.setBackground( curColor );
+                            }
+                    } );
+                panelEdit.add( labelColor );
+                panelEdit.add( buttonColor );
+
                 panelDraw = new PanelDraw(textField);
 
                 button1 = new JButton( "Button 1" );
