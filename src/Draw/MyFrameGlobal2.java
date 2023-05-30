@@ -34,28 +34,29 @@ public class MyFrameGlobal2 extends JFrame
                 panelButton.setLayout( new GridLayout( 2, 4 ) );
 
                 JPanel panelEdit = new JPanel();
-                panelEdit.setPreferredSize( new Dimension(600,100) );
-                JLabel label = new JLabel("Width:");
+                panelEdit.setPreferredSize( new Dimension( 600, 100 ) );
+                JLabel label = new JLabel( "Width:" );
                 panelEdit.add( label );
-                JTextField textField = new JTextField("10");
+                JTextField textField = new JTextField( "10" );
                 textField.setColumns( 5 );
                 panelEdit.add( textField );
 
-                JLabel labelColor = new JLabel("Color:");
-                JButton buttonColor = new JButton("Select color");
+                JLabel labelColor = new JLabel( "Color:" );
+                JButton buttonColor = new JButton( "Select color" );
                 buttonColor.addActionListener( new ActionListener()
                     {
                         @Override
                         public void actionPerformed( ActionEvent e )
                             {
-                                Color curColor = JColorChooser.showDialog( null,"Select color",Color.white );
+                                Color curColor = JColorChooser.showDialog( null, "Select color", Color.white );
                                 buttonColor.setBackground( curColor );
+                                panelDraw.repaint();
                             }
                     } );
                 panelEdit.add( labelColor );
                 panelEdit.add( buttonColor );
 
-                panelDraw = new PanelDraw(textField);
+                panelDraw = new PanelDraw( textField, buttonColor );
 
                 button1 = new JButton( "Button 1" );
                 button1.addActionListener( new MyActionListener() );
@@ -70,6 +71,7 @@ public class MyFrameGlobal2 extends JFrame
                 panelButton.add( button3 );
 
                 button4 = new JButton( ("Button 4") );
+                button4.addActionListener( new MyActionListener() );
                 panelButton.add( button4 );
 
                 button5 = new JButton( ("Button 5") );
@@ -87,7 +89,7 @@ public class MyFrameGlobal2 extends JFrame
 
                 setLayout( new BorderLayout() );
                 add( panelButton, BorderLayout.NORTH );
-                add( panelEdit, BorderLayout.CENTER);
+                add( panelEdit, BorderLayout.CENTER );
                 add( panelDraw, BorderLayout.SOUTH );
             }
 
@@ -101,12 +103,16 @@ public class MyFrameGlobal2 extends JFrame
                                 panelDraw.drawCircle();
                             }
                         else if (e.getSource() == button2)
-                        {
-                            panelDraw.setEditSize();
-                        }
+                            {
+                                panelDraw.setEditSize();
+                            }
                         else if (e.getSource() == button3)
                             {
                                 panelDraw.drawRandomCircle();
+                            }
+                        else if (e.getSource() == button4)
+                            {
+                                panelDraw.canvasRepaint();
                             }
                     }
             }
@@ -114,20 +120,29 @@ public class MyFrameGlobal2 extends JFrame
         public static class MyCanvas extends Canvas
             {
                 private ArrayList<Shape> shapes;
+                private JButton buttonColor;
 
-                public MyCanvas()
+                public MyCanvas(JButton buttonColor)
                     {
                         shapes = new ArrayList<>();
+                        this.buttonColor = buttonColor;
                     }
 
                 @Override
                 public void paint( Graphics g )
                     {
                         Graphics2D g2d = (Graphics2D) g;
+
+                        Color color1 = Color.white;
+                        Color color2 = this.buttonColor.getBackground();
+                        GradientPaint gradientPaint = new GradientPaint( 0, 0, color1, getWidth(), getHeight(), color2 );
+                        g2d.setPaint( gradientPaint );
+                        g2d.fillRect(0, 0, getWidth(), getHeight());
+
                         g2d.setColor( Color.CYAN );
-                        for (Shape shape: shapes)
+                        for (Shape shape : shapes)
                             {
-                                g2d.fill(shape);
+                                g2d.fill( shape );
                             }
                     }
             }
@@ -138,18 +153,19 @@ public class MyFrameGlobal2 extends JFrame
                 private JTextField textField;
                 private MyCanvas canvas;
 
-                public PanelDraw(JTextField textField)
+                public PanelDraw( JTextField textField, JButton buttonColor )
                     {
                         setPreferredSize( new Dimension( 600, 390 ) );
-                        canvas = new MyCanvas();
+                        canvas = new MyCanvas(buttonColor);
                         canvas.setPreferredSize( new Dimension( 600, 390 ) );
                         add( canvas, BorderLayout.CENTER );
                         this.textField = textField;
                     }
 
+
                 public void drawCircle()
                     {
-                        Ellipse2D ellipse2D =  new Ellipse2D.Double(100,100,60,60);
+                        Ellipse2D ellipse2D = new Ellipse2D.Double( 100, 100, 60, 60 );
                         canvas.shapes.add( ellipse2D );
 
                         canvas.repaint();
@@ -166,7 +182,7 @@ public class MyFrameGlobal2 extends JFrame
                                         Ellipse2D ellipse = (Ellipse2D) shape;
                                         double newX = ellipse.getX() - (size - ellipse.getWidth()) / 2; // вычисляем новое положение X
                                         double newY = ellipse.getY() - (size - ellipse.getHeight()) / 2; // вычисляем новое положение Y
-                                        ellipse.setFrame( newX,newY,size,size );
+                                        ellipse.setFrame( newX, newY, size, size );
                                     }
                             }
 
@@ -175,15 +191,22 @@ public class MyFrameGlobal2 extends JFrame
 
                 public void drawRandomCircle()
                     {
-                        int x = MyCollections.getRandomFromTo( 50,500 );
-                        int y = MyCollections.getRandomFromTo( 50,300 );
-                        int size = MyCollections.getRandomFromTo( 10,250 );
+                        int x = MyCollections.getRandomFromTo( 50, 500 );
+                        int y = MyCollections.getRandomFromTo( 50, 300 );
+                        int size = MyCollections.getRandomFromTo( 10, 250 );
 
-                        Ellipse2D ellipse2D = new Ellipse2D.Double(x,y,size,size);
+                        Ellipse2D ellipse2D = new Ellipse2D.Double( x, y, size, size );
                         canvas.shapes.add( ellipse2D );
 
                         canvas.repaint();
                     }
+
+                public void canvasRepaint()
+                    {
+                        canvas.repaint();
+                    }
+
+
             }
 
         public static void main( String[] args )
