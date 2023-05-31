@@ -1,6 +1,7 @@
 package Draw;
 
 import MyMethods.MyCollections;
+import com.sun.jdi.ThreadReference;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Path2D;
+import java.awt.geom.Rectangle2D;
+import java.awt.geom.RoundRectangle2D;
 import java.util.ArrayList;
 
 public class MyFrameGlobal2 extends JFrame
@@ -75,6 +78,7 @@ public class MyFrameGlobal2 extends JFrame
                 panelButton.add( button4 );
 
                 button5 = new JButton( ("Button 5") );
+                button5.addActionListener( new MyActionListener() );
                 panelButton.add( button5 );
 
                 button6 = new JButton( ("Button 6") );
@@ -113,6 +117,10 @@ public class MyFrameGlobal2 extends JFrame
                         else if (e.getSource() == button4)
                             {
                                 panelDraw.canvasRepaint();
+                            }
+                        else if (e.getSource() == button5)
+                            {
+                                panelDraw.squareBlink();
                             }
                     }
             }
@@ -204,6 +212,41 @@ public class MyFrameGlobal2 extends JFrame
                 public void canvasRepaint()
                     {
                         canvas.repaint();
+                    }
+
+                public void squareBlink()
+                    {
+                        Thread thread = new Thread(() -> {
+                            int ii = 100;
+                            int centerX = 150;
+                            int centerY = 150;
+                            int curX;
+                            int curY;
+                            int direction = -1;
+
+                            while (true)
+                                {
+                                    curX = centerX - (ii/2);
+                                    curY = centerY - (ii/2);
+                                    canvas.shapes.add( new Rectangle2D.Double(curX,curY,ii,ii));
+
+                                    canvas.repaint();
+                                    try
+                                        {
+                                            Thread.sleep( 10 );
+                                        } catch (InterruptedException e)
+                                        {
+                                            e.printStackTrace();
+                                        }
+
+                                    canvas.shapes.clear();
+                                    ii += direction;
+
+                                    if (ii<=1) direction = 1;
+                                    if (ii>=100) direction = -1;
+                                }
+                        });
+                        thread.start();
                     }
 
 
