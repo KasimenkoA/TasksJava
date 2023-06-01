@@ -82,6 +82,7 @@ public class MyFrameGlobal2 extends JFrame
                 panelButton.add( button5 );
 
                 button6 = new JButton( ("Button 6") );
+                button6.addActionListener( new MyActionListener() );
                 panelButton.add( button6 );
 
                 button7 = new JButton( ("Button 7") );
@@ -122,6 +123,10 @@ public class MyFrameGlobal2 extends JFrame
                             {
                                 panelDraw.squareBlink();
                             }
+                        else if (e.getSource() == button6)
+                            {
+                                panelDraw.squareToCircle();
+                            }
                     }
             }
 
@@ -130,7 +135,7 @@ public class MyFrameGlobal2 extends JFrame
                 private ArrayList<Shape> shapes;
                 private JButton buttonColor;
 
-                public MyCanvas(JButton buttonColor)
+                public MyCanvas( JButton buttonColor )
                     {
                         shapes = new ArrayList<>();
                         this.buttonColor = buttonColor;
@@ -143,9 +148,13 @@ public class MyFrameGlobal2 extends JFrame
 
                         Color color1 = Color.white;
                         Color color2 = this.buttonColor.getBackground();
-                        GradientPaint gradientPaint = new GradientPaint( 0, 0, color1, getWidth(), getHeight(), color2 );
-                        g2d.setPaint( gradientPaint );
-                        g2d.fillRect(0, 0, getWidth(), getHeight());
+
+                        if (!color1.equals( color2 ))
+                            {
+                                GradientPaint gradientPaint = new GradientPaint( 0, 0, color1, getWidth(), getHeight(), color2 );
+                                g2d.setPaint( gradientPaint );
+                                g2d.fillRect( 0, 0, getWidth(), getHeight() );
+                            }
 
                         g2d.setColor( Color.CYAN );
                         for (Shape shape : shapes)
@@ -164,7 +173,7 @@ public class MyFrameGlobal2 extends JFrame
                 public PanelDraw( JTextField textField, JButton buttonColor )
                     {
                         setPreferredSize( new Dimension( 600, 390 ) );
-                        canvas = new MyCanvas(buttonColor);
+                        canvas = new MyCanvas( buttonColor );
                         canvas.setPreferredSize( new Dimension( 600, 390 ) );
                         add( canvas, BorderLayout.CENTER );
                         this.textField = textField;
@@ -216,7 +225,8 @@ public class MyFrameGlobal2 extends JFrame
 
                 public void squareBlink()
                     {
-                        Thread thread = new Thread(() -> {
+                        Thread thread = new Thread( () ->
+                        {
                             int ii = 100;
                             int centerX = 150;
                             int centerY = 150;
@@ -226,9 +236,9 @@ public class MyFrameGlobal2 extends JFrame
 
                             while (true)
                                 {
-                                    curX = centerX - (ii/2);
-                                    curY = centerY - (ii/2);
-                                    canvas.shapes.add( new Rectangle2D.Double(curX,curY,ii,ii));
+                                    curX = centerX - (ii / 2);
+                                    curY = centerY - (ii / 2);
+                                    canvas.shapes.add( new Rectangle2D.Double( curX, curY, ii, ii ) );
 
                                     canvas.repaint();
                                     try
@@ -242,10 +252,69 @@ public class MyFrameGlobal2 extends JFrame
                                     canvas.shapes.clear();
                                     ii += direction;
 
-                                    if (ii<=1) direction = 1;
-                                    if (ii>=100) direction = -1;
+                                    if (ii <= 1)
+                                        {
+                                            direction = 1;
+                                        }
+                                    if (ii >= 100)
+                                        {
+                                            direction = -1;
+                                        }
                                 }
-                        });
+                        } );
+                        thread.start();
+                    }
+
+                public void squareToCircle()
+                    {
+                        Thread thread = new Thread( () ->
+                        {
+                            int ii = 100;
+                            int centerX = 150;
+                            int centerY = 150;
+                            int curX;
+                            int curY;
+                            int direction = -1;
+                            boolean isSquare = true;
+
+                            while (true)
+                                {
+                                    curX = centerX - (ii / 2);
+                                    curY = centerY - (ii / 2);
+
+                                    if (isSquare)
+                                        {
+                                            canvas.shapes.add( new Rectangle2D.Double( curX, curY, ii, ii ) );
+                                        }
+                                    else
+                                        {
+                                            canvas.shapes.add( new Ellipse2D.Double( curX, curY, ii, ii ) );
+                                        }
+
+                                    canvas.repaint();
+                                    try
+                                        {
+                                            Thread.sleep( 10 );
+                                        } catch (InterruptedException e)
+                                        {
+                                            e.printStackTrace();
+                                        }
+
+                                    canvas.shapes.clear();
+                                    ii += direction;
+
+                                    if (ii <= 1)
+                                        {
+                                            direction = 1;
+                                            isSquare = !isSquare;
+                                        }
+
+                                    if (ii >= 100)
+                                        {
+                                            direction = -1;
+                                        }
+                                }
+                        } );
                         thread.start();
                     }
 
