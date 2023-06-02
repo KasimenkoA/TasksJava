@@ -86,6 +86,7 @@ public class MyFrameGlobal2 extends JFrame
                 panelButton.add( button6 );
 
                 button7 = new JButton( ("Button 7") );
+                button7.addActionListener( new MyActionListener() );
                 panelButton.add( button7 );
 
                 button8 = new JButton( ("Button 8") );
@@ -126,6 +127,10 @@ public class MyFrameGlobal2 extends JFrame
                         else if (e.getSource() == button6)
                             {
                                 panelDraw.squareToCircle();
+                            }
+                        else if (e.getSource() == button7)
+                            {
+                                panelDraw.circleToOval();
                             }
                     }
             }
@@ -315,6 +320,51 @@ public class MyFrameGlobal2 extends JFrame
                                         }
                                 }
                         } );
+                        thread.start();
+                    }
+
+                public void circleToOval()
+                    {
+                        Thread thread = new Thread( ()-> {
+                            int startW = 100;
+                            int startH = 100;
+
+                            for (int i = 100; i < 200; i++)
+                                {
+                                    startW = i;
+
+                                    Ellipse2D ellipse2D = new Ellipse2D.Double( 100, 100, startW, startH );
+                                    canvas.shapes.add( ellipse2D );
+
+                                    canvas.repaint();
+                                    try
+                                        {
+                                            Thread.sleep( 20 );
+                                        } catch (InterruptedException e)
+                                        {
+                                            e.printStackTrace();
+                                        }
+                                    canvas.shapes.clear();
+                                }
+
+                            for (int i = 100; i < 200; i++)
+                                {
+                                    startH = i;
+
+                                    Ellipse2D ellipse2D = new Ellipse2D.Double( 100, 100, startW, startH );
+                                    canvas.shapes.add( ellipse2D );
+
+                                    canvas.repaint();
+                                    try
+                                        {
+                                            Thread.sleep( 20 );
+                                        } catch (InterruptedException e)
+                                        {
+                                            e.printStackTrace();
+                                        }
+                                    canvas.shapes.clear();
+                                }
+                        });
                         thread.start();
                     }
 
