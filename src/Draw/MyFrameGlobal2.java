@@ -90,6 +90,7 @@ public class MyFrameGlobal2 extends JFrame
                 panelButton.add( button7 );
 
                 button8 = new JButton( ("Button 8") );
+                button8.addActionListener( new MyActionListener() );
                 panelButton.add( button8 );
 
 
@@ -131,6 +132,10 @@ public class MyFrameGlobal2 extends JFrame
                         else if (e.getSource() == button7)
                             {
                                 panelDraw.circleToOval();
+                            }
+                        else if (e.getSource() == button8)
+                            {
+                                panelDraw.circleRandomMove();
                             }
                     }
             }
@@ -367,6 +372,45 @@ public class MyFrameGlobal2 extends JFrame
                         });
                         thread.start();
                     }
+
+                public void circleRandomMove()
+                    {
+                        Thread thread = new Thread( ()-> {
+                            int startX = 200;
+                            int startY = 200;
+                            int size = 100;
+                            int stepCount = 100;
+
+                            double stepX = (Math.random()*getWidth() - startX)/stepCount;
+                            double stepY = (Math.random()*getHeight() - startY)/stepCount;
+
+                            double positionX = startX;
+                            double positionY = startY;
+
+                            canvas.shapes.clear();
+                            for (int i = 0; i < stepCount; i++)
+                                {
+                                    Ellipse2D ellipse2D = new Ellipse2D.Double( positionX, positionY, size, size );
+                                    canvas.shapes.add( ellipse2D );
+
+                                    canvas.repaint();
+                                    try
+                                        {
+                                            Thread.sleep( 20 );
+                                        } catch (InterruptedException e)
+                                        {
+                                            e.printStackTrace();
+                                        }
+                                    canvas.shapes.clear();
+
+                                    positionX += stepX;
+                                    positionY += stepY;
+                                }
+
+                        });
+                        thread.start();
+                    }
+
 
 
             }
