@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.Ellipse2D;
+import java.util.ArrayList;
 
 public class MyFrameGlobal3 extends JFrame
     {
@@ -33,6 +35,7 @@ public class MyFrameGlobal3 extends JFrame
                 panelDraw.setPreferredSize( new Dimension( 600, 400 ) );
 
                 button1 = new JButton( "Button 1" );
+                button1.addActionListener( new MyActionListener());
                 panelButton.add( button1 );
 
                 button2 = new JButton( ("Button 2") );
@@ -68,29 +71,67 @@ public class MyFrameGlobal3 extends JFrame
                     {
                         if (e.getSource() == button1)
                             {
-                                //panelDraw.drawMyOval();
+                                panelDraw.drawCircle();
                             }
                     }
             }
 
+
+
+
+        public static class MyCircle
+            {
+                private Ellipse2D circle;
+                private Color color;
+                private double stepX;
+                private double stepY;
+
+                public MyCircle( Ellipse2D circle, Color color, double stepX, double stepY )
+                    {
+                        this.circle = circle;
+                        this.color = color;
+                        this.stepX = stepX;
+                        this.stepY = stepY;
+                    }
+            }
+
+
+        public static class PanelDraw extends JPanel
+            {
+                private ArrayList<MyCircle> myCircles;
+
+                public PanelDraw()
+                    {
+                        myCircles = new ArrayList<>();
+                    }
+
+                @Override
+                protected void paintComponent( Graphics g )
+                    {
+                        super.paintComponent( g );
+
+                        Graphics2D g2d = (Graphics2D) g;
+
+                        for (MyCircle myCircle : myCircles)
+                            {
+                                g2d.setColor( myCircle.color );
+                                g2d.fill( myCircle.circle );
+                            }
+                    }
+
+                public void drawCircle()
+                    {
+                        Ellipse2D ellipse2D = new Ellipse2D.Double(100,100,80,80);
+                        myCircles.add( new MyCircle( ellipse2D, Color.BLUE,0, 0 ) );
+
+                        repaint();
+                    }
+
+            }
 
         public static void main( String[] args )
             {
                 MyFrameGlobal3 frame = new MyFrameGlobal3();
                 frame.setVisible( true );
             }
-
-
-        public static class PanelDraw extends JPanel
-            {
-//                public void drawMyOval()
-//                    {
-//                        Graphics g = getGraphics();
-//                        g.setColor( Color.blue );
-//                        g.fillOval( 200, 150, 90, 80 );
-//                    }
-
-
-            }
-
     }
