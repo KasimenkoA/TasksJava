@@ -39,6 +39,7 @@ public class MyFrameGlobal3 extends JFrame
                 panelButton.add( button1 );
 
                 button2 = new JButton( ("Button 2") );
+                button2.addActionListener( new MyActionListener() );
                 panelButton.add( button2 );
 
                 button3 = new JButton( ("Button 3") );
@@ -73,11 +74,12 @@ public class MyFrameGlobal3 extends JFrame
                             {
                                 panelDraw.drawCircle();
                             }
+                        else if (e.getSource() == button2)
+                            {
+                                panelDraw.drawCircles();
+                            }
                     }
             }
-
-
-
 
         public static class MyCircle
             {
@@ -123,6 +125,31 @@ public class MyFrameGlobal3 extends JFrame
                     {
                         Ellipse2D ellipse2D = new Ellipse2D.Double(100,100,80,80);
                         myCircles.add( new MyCircle( ellipse2D, Color.BLUE,0, 0 ) );
+
+                        repaint();
+                    }
+
+                public void drawCircles()
+                    {
+                        double x;
+                        double y;
+                        double size;
+                        double stepX;
+                        double stepY;
+                        Color color;
+
+                        for (int i = 0; i < 5; i++)
+                            {
+                                x = Math.random()*400 + 50;
+                                y = Math.random()*300 + 50;
+                                size = Math.random()*40 + 10;
+                                stepX = Math.random()*10;
+                                stepY = Math.random()*10;
+                                color = MyCollections.getRandomColor();
+
+                                Ellipse2D ellipse2D = new Ellipse2D.Double(x,y,size,size);
+                                myCircles.add( new MyCircle( ellipse2D, color,stepX, stepY ) );
+                            }
 
                         repaint();
                     }
