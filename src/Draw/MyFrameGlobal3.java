@@ -8,6 +8,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class MyFrameGlobal3 extends JFrame
     {
@@ -63,6 +67,18 @@ public class MyFrameGlobal3 extends JFrame
 
                 add( panelButton, BorderLayout.NORTH );
                 add( panelDraw, BorderLayout.SOUTH );
+
+                ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
+                service.scheduleWithFixedDelay( new PanelRepaint(), 100,50, TimeUnit.MILLISECONDS );
+            }
+
+        public class PanelRepaint implements Runnable
+            {
+                @Override
+                public void run()
+                    {
+                        panelDraw.repaint();
+                    }
             }
 
         public class MyActionListener implements ActionListener
@@ -113,11 +129,32 @@ public class MyFrameGlobal3 extends JFrame
                         super.paintComponent( g );
 
                         Graphics2D g2d = (Graphics2D) g;
+                        double curX;
+                        double curY;
+                        double curSize;
 
                         for (MyCircle myCircle : myCircles)
                             {
                                 g2d.setColor( myCircle.color );
                                 g2d.fill( myCircle.circle );
+
+                                curX = myCircle.circle.getX() + myCircle.stepX;
+                                if (curX>=this.getWidth() || curX<=0 )
+                                    {
+                                        curX = myCircle.circle.getX();
+                                        myCircle.stepX = -myCircle.stepX;
+                                    }
+
+                                curY = myCircle.circle.getY() + myCircle.stepY;
+                                if (curY>=this.getHeight() || curY<=0 )
+                                    {
+                                        curY = myCircle.circle.getY();
+                                        myCircle.stepY = -myCircle.stepY;
+                                    }
+
+                                curSize = myCircle.circle.getWidth();
+
+                                myCircle.circle.setFrame( curX,curY,curSize,curSize );
                             }
                     }
 
