@@ -47,6 +47,7 @@ public class MyFrameGlobal3 extends JFrame
                 panelButton.add( button2 );
 
                 button3 = new JButton( ("Button 3") );
+                button3.addActionListener( new MyActionListener() );
                 panelButton.add( button3 );
 
                 button4 = new JButton( ("Button 4") );
@@ -93,6 +94,10 @@ public class MyFrameGlobal3 extends JFrame
                         else if (e.getSource() == button2)
                             {
                                 panelDraw.drawCircles();
+                            }
+                        else if (e.getSource() == button3)
+                            {
+                                panelDraw.changeColor();
                             }
                     }
             }
@@ -191,6 +196,15 @@ public class MyFrameGlobal3 extends JFrame
                         repaint();
                     }
 
+                public void changeColor()
+                    {
+                        Color color = JColorChooser.showDialog( null,"Select color", Color.white );
+
+                        for (MyCircle myCircle : myCircles)
+                            {
+                                myCircle.color = color;
+                            }
+                    }
             }
 
         public static void main( String[] args )
