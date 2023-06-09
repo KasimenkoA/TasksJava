@@ -51,6 +51,7 @@ public class MyFrameGlobal3 extends JFrame
                 panelButton.add( button3 );
 
                 button4 = new JButton( ("Button 4") );
+                button4.addActionListener( new MyActionListener() );
                 panelButton.add( button4 );
 
                 button5 = new JButton( ("Button 5") );
@@ -99,6 +100,10 @@ public class MyFrameGlobal3 extends JFrame
                             {
                                 panelDraw.changeColor();
                             }
+                        else if (e.getSource() == button4)
+                            {
+                                panelDraw.setRandomPuls();
+                            }
                     }
             }
 
@@ -108,6 +113,9 @@ public class MyFrameGlobal3 extends JFrame
                 private Color color;
                 private double stepX;
                 private double stepY;
+                private double pulse;
+                private int pulseCount;
+
 
                 public MyCircle( Ellipse2D circle, Color color, double stepX, double stepY )
                     {
@@ -115,6 +123,8 @@ public class MyFrameGlobal3 extends JFrame
                         this.color = color;
                         this.stepX = stepX;
                         this.stepY = stepY;
+                        this.pulse = 0;
+                        this.pulseCount = 0;
                     }
             }
 
@@ -158,6 +168,17 @@ public class MyFrameGlobal3 extends JFrame
                                     }
 
                                 curSize = myCircle.circle.getWidth();
+
+                                curSize -= myCircle.pulse;
+                                if (curSize<1) curSize=1;
+
+                                myCircle.pulseCount = myCircle.pulseCount + 1;
+                                if (myCircle.pulseCount >= 10)
+                                    {
+                                        myCircle.pulse = -myCircle.pulse;
+                                        myCircle.pulseCount = 0;
+                                    }
+
 
                                 myCircle.circle.setFrame( curX,curY,curSize,curSize );
                             }
@@ -203,6 +224,15 @@ public class MyFrameGlobal3 extends JFrame
                         for (MyCircle myCircle : myCircles)
                             {
                                 myCircle.color = color;
+                            }
+                    }
+
+                public void setRandomPuls()
+                    {
+                        for (MyCircle myCircle : myCircles)
+                            {
+                                myCircle.pulse = Math.random()*10;
+                                myCircle.pulseCount = 0;
                             }
                     }
             }
