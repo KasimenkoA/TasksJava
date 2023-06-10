@@ -55,6 +55,7 @@ public class MyFrameGlobal3 extends JFrame
                 panelButton.add( button4 );
 
                 button5 = new JButton( ("Button 5") );
+                button5.addActionListener( new MyActionListener() );
                 panelButton.add( button5 );
 
                 button6 = new JButton( ("Button 6") );
@@ -103,6 +104,10 @@ public class MyFrameGlobal3 extends JFrame
                         else if (e.getSource() == button4)
                             {
                                 panelDraw.setRandomPuls();
+                            }
+                        else if (e.getSource() == button5)
+                            {
+                                panelDraw.goAway();
                             }
                     }
             }
@@ -234,6 +239,30 @@ public class MyFrameGlobal3 extends JFrame
                                 myCircle.pulse = Math.random()*10;
                                 myCircle.pulseCount = 0;
                             }
+                    }
+
+                public void goAway()
+                    {
+                        double centerX = getWidth()/2;
+                        double centerY = getHeight()/2;
+
+                        double moduleStepX = 0;
+                        double moduleStepY = 0;
+
+                        for (MyCircle myCircle : myCircles)
+                            {
+                                moduleStepX = Math.abs( myCircle.stepX );
+                                moduleStepY = Math.abs( myCircle.stepY );
+
+                                if (myCircle.circle.getX()>centerX) myCircle.stepX = moduleStepX;
+                                else myCircle.stepX = -moduleStepX;
+
+                                if (myCircle.circle.getY()>centerY) myCircle.stepY = moduleStepY;
+                                else myCircle.stepY = -moduleStepY;
+                            }
+
+                        Ellipse2D ellipse2D = new Ellipse2D.Double(centerX,centerY,10,10);
+                        myCircles.add( new MyCircle( ellipse2D, Color.BLACK,0, 0 ) );
                     }
             }
 
