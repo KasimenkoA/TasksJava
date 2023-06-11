@@ -59,6 +59,7 @@ public class MyFrameGlobal3 extends JFrame
                 panelButton.add( button5 );
 
                 button6 = new JButton( ("Button 6") );
+                button6.addActionListener( new MyActionListener() );
                 panelButton.add( button6 );
 
                 button7 = new JButton( ("Button 7") );
@@ -108,6 +109,10 @@ public class MyFrameGlobal3 extends JFrame
                         else if (e.getSource() == button5)
                             {
                                 panelDraw.goAway();
+                            }
+                        else if (e.getSource() == button6)
+                            {
+                                panelDraw.fromCenter();
                             }
                     }
             }
@@ -263,6 +268,22 @@ public class MyFrameGlobal3 extends JFrame
 
                         Ellipse2D ellipse2D = new Ellipse2D.Double(centerX,centerY,10,10);
                         myCircles.add( new MyCircle( ellipse2D, Color.BLACK,0, 0 ) );
+                    }
+
+                public void fromCenter()
+                    {
+                        double size;
+                        double centerX = getWidth()/2;
+                        double height  = getHeight() - 100;
+                        double moduleStepY = 0;
+
+                        for (MyCircle myCircle : myCircles)
+                            {
+                                moduleStepY = Math.abs( myCircle.stepY );
+                                size = myCircle.circle.getWidth();
+                                myCircle.circle.setFrame( centerX,height,size,size );
+                                myCircle.stepY = -moduleStepY;
+                            }
                     }
             }
 
