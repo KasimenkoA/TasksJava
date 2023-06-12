@@ -2,11 +2,15 @@ package Draw;
 
 import MyMethods.MyCollections;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Ellipse2D;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -63,6 +67,7 @@ public class MyFrameGlobal3 extends JFrame
                 panelButton.add( button6 );
 
                 button7 = new JButton( ("Button 7") );
+                button7.addActionListener( new MyActionListener() );
                 panelButton.add( button7 );
 
                 button8 = new JButton( ("Button 8") );
@@ -114,6 +119,10 @@ public class MyFrameGlobal3 extends JFrame
                             {
                                 panelDraw.fromCenter();
                             }
+                        else if (e.getSource() == button7)
+                            {
+                                panelDraw.selectPicture();
+                            }
                     }
             }
 
@@ -139,12 +148,14 @@ public class MyFrameGlobal3 extends JFrame
             }
 
 
-        public static class PanelDraw extends JPanel
+        public class PanelDraw extends JPanel
             {
+                private ArrayList<Image> myImages;
                 private ArrayList<MyCircle> myCircles;
 
                 public PanelDraw()
                     {
+                        myImages = new ArrayList<>();
                         myCircles = new ArrayList<>();
                     }
 
@@ -154,6 +165,12 @@ public class MyFrameGlobal3 extends JFrame
                         super.paintComponent( g );
 
                         Graphics2D g2d = (Graphics2D) g;
+
+                       for (Image myImage: myImages)
+                           {
+                               g2d.drawImage( myImage,0,0,getWidth(),getHeight(),null );
+                           }
+
                         double curX;
                         double curY;
                         double curSize;
@@ -285,6 +302,24 @@ public class MyFrameGlobal3 extends JFrame
                                 myCircle.stepY = -moduleStepY;
                             }
                     }
+
+                public void selectPicture()
+                {
+                    JFileChooser jFileChooser = new JFileChooser();
+                    FileNameExtensionFilter filter = new FileNameExtensionFilter( "jpg","jpg" );
+                    jFileChooser.setFileFilter( filter );
+
+                    if (jFileChooser.showOpenDialog( this ) == JFileChooser.APPROVE_OPTION)
+                    {
+                        File file = jFileChooser.getSelectedFile();
+                        try {
+                            Image image = ImageIO.read(file);
+                            myImages.add( image );
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
             }
 
         public static void main( String[] args )
