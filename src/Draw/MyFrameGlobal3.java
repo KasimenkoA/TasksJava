@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Ellipse2D;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -71,6 +72,7 @@ public class MyFrameGlobal3 extends JFrame
                 panelButton.add( button7 );
 
                 button8 = new JButton( ("Button 8") );
+                button8.addActionListener( new MyActionListener() );
                 panelButton.add( button8 );
 
 
@@ -122,6 +124,10 @@ public class MyFrameGlobal3 extends JFrame
                         else if (e.getSource() == button7)
                             {
                                 panelDraw.selectPicture();
+                            }
+                        else if (e.getSource() == button8)
+                            {
+                                panelDraw.savePanelAsImage();
                             }
                     }
             }
@@ -320,6 +326,19 @@ public class MyFrameGlobal3 extends JFrame
                         }
                     }
                 }
+
+                private void savePanelAsImage()
+                    {
+                        String fileName = "panelImage.jpg";
+                        BufferedImage image = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
+                        Graphics2D g2 = image.createGraphics();
+                        this.paint(g2);
+                        try {
+                            ImageIO.write(image, "jpg", new File(fileName));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
             }
 
         public static void main( String[] args )
