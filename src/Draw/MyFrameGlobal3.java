@@ -327,7 +327,7 @@ public class MyFrameGlobal3 extends JFrame
                     }
                 }
 
-                private void savePanelAsImage()
+                public void savePanelAsImage()
                     {
                         String fileName = "panelImage.jpg";
                         BufferedImage image = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
