@@ -4,11 +4,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.Ellipse2D;
+import java.util.ArrayList;
 
 public class MyFrameMix extends JFrame
     {
         PanelDraw panelDraw;
         JButton button1;
+        Shape tempShape;
+        ArrayList<Shape> shapes = new ArrayList<>();
         int startX;
         int startY;
         int endX;
@@ -26,10 +29,11 @@ public class MyFrameMix extends JFrame
 
                 panelDraw = new PanelDraw();
                 panelDraw.setPreferredSize( new Dimension( 600, 400 ) );
-                panelDraw.addMouseListener( new MyMouseAdapter());
+                panelDraw.addMouseListener( new MyMouseAdapter() );
+                panelDraw.addMouseMotionListener( new MyMouseMotionListener() );
 
                 button1 = new JButton( "Button 1" );
-                button1.addActionListener( new MyActionListener());
+                button1.addActionListener( new MyActionListener() );
                 panelButton.add( button1 );
 
                 add( panelButton, BorderLayout.NORTH );
@@ -56,24 +60,59 @@ public class MyFrameMix extends JFrame
                         endX = e.getX();
                         endY = e.getY();
 
-                        drawFigure();
+                        shapes.add( getFigure() );
+                        repaint();
                     }
             }
 
-        private void drawFigure()
+        public class MyMouseMotionListener extends MouseMotionAdapter
             {
-                int minX = Math.min( startX,endX );
-                int minY = Math.min( startY,endY );
-                int maxX = Math.max( startX,endX );
-                int maxY = Math.max( startY,endY );
+                @Override
+                public void mouseDragged( MouseEvent e )
+                    {
+                        endX = e.getX();
+                        endY = e.getY();
 
-
-                Graphics2D g2 =  (Graphics2D) panelDraw.getGraphics();
-
-                Ellipse2D ellipse2D = new Ellipse2D.Double(minX,minY,maxX-minX,maxY-minY);
-                g2.draw( ellipse2D );
+                        tempShape = getFigure();
+                        repaint();
+                    }
             }
 
+
+        private Shape getFigure()
+            {
+                int minX = Math.min( startX, endX );
+                int minY = Math.min( startY, endY );
+                int maxX = Math.max( startX, endX );
+                int maxY = Math.max( startY, endY );
+
+                Ellipse2D ellipse2D = new Ellipse2D.Double( minX, minY, maxX - minX, maxY - minY );
+                return ellipse2D;
+            }
+
+        private class PanelDraw extends JPanel
+            {
+                @Override
+                public void paint( Graphics g )
+                    {
+                        Graphics2D g2 = (Graphics2D) g;
+
+                        if (tempShape != null)
+                            {
+                                g2.draw( tempShape );
+                            }
+
+                        for (Shape shape : shapes)
+                            {
+                                g2.draw( shape );
+                            }
+                    }
+
+                private void fillBackground()
+                    {
+                        setBackground( Color.PINK );
+                    }
+            }
 
         public class MyActionListener implements ActionListener
             {
@@ -85,15 +124,6 @@ public class MyFrameMix extends JFrame
                                 panelDraw.fillBackground();
                             }
                     }
-            }
-
-        private class PanelDraw extends JPanel
-            {
-                private void fillBackground()
-                    {
-                        setBackground( Color.PINK );
-                    }
-
             }
 
         public static void main( String[] args )
