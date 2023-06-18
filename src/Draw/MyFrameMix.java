@@ -10,8 +10,10 @@ public class MyFrameMix extends JFrame
     {
         PanelDraw panelDraw;
         JButton button1;
-        Shape tempShape;
-        ArrayList<Shape> shapes = new ArrayList<>();
+        JButton button2;
+        MyShape tempShape;
+        Color curColor;
+        ArrayList<MyShape> shapes = new ArrayList<>();
         int startX;
         int startY;
         int endX;
@@ -25,7 +27,7 @@ public class MyFrameMix extends JFrame
                 setDefaultCloseOperation( EXIT_ON_CLOSE );
 
                 JPanel panelButton = new JPanel();
-                panelButton.setLayout( new GridLayout( 2, 4 ) );
+                panelButton.setLayout( new GridLayout( 1, 4 ) );
 
                 panelDraw = new PanelDraw();
                 panelDraw.setPreferredSize( new Dimension( 600, 400 ) );
@@ -36,6 +38,10 @@ public class MyFrameMix extends JFrame
                 button1.addActionListener( new MyActionListener() );
                 panelButton.add( button1 );
 
+                button2 = new JButton( "Color" );
+                button2.addActionListener( new MyActionListener() );
+                panelButton.add( button2 );
+
                 add( panelButton, BorderLayout.NORTH );
                 add( panelDraw, BorderLayout.SOUTH );
 
@@ -43,6 +49,8 @@ public class MyFrameMix extends JFrame
                 startY = 0;
                 endX = 0;
                 endY = 0;
+
+                curColor = Color.WHITE;
             }
 
         public class MyMouseAdapter extends MouseAdapter
@@ -60,7 +68,7 @@ public class MyFrameMix extends JFrame
                         endX = e.getX();
                         endY = e.getY();
 
-                        shapes.add( getFigure() );
+                        shapes.add( getMyShape() );
                         repaint();
                     }
             }
@@ -73,11 +81,10 @@ public class MyFrameMix extends JFrame
                         endX = e.getX();
                         endY = e.getY();
 
-                        tempShape = getFigure();
+                        tempShape = getMyShape();
                         repaint();
                     }
             }
-
 
         private Shape getFigure()
             {
@@ -90,6 +97,23 @@ public class MyFrameMix extends JFrame
                 return ellipse2D;
             }
 
+        private MyShape getMyShape()
+            {
+                return new MyShape( curColor,getFigure() );
+            }
+
+        private class MyShape
+            {
+                Shape shape;
+                Color color;
+
+                public MyShape(Color color, Shape shape)
+                    {
+                        this.color = color;
+                        this.shape = shape;
+                    }
+            }
+
         private class PanelDraw extends JPanel
             {
                 @Override
@@ -99,18 +123,26 @@ public class MyFrameMix extends JFrame
 
                         if (tempShape != null)
                             {
-                                g2.draw( tempShape );
+                                g2.setColor( tempShape.color );
+                                g2.draw( tempShape.shape );
                             }
 
-                        for (Shape shape : shapes)
+                        for (MyShape shape : shapes)
                             {
-                                g2.draw( shape );
+                                g2.setColor( shape.color );
+                                g2.draw( shape.shape );
                             }
                     }
 
                 private void fillBackground()
                     {
                         setBackground( Color.PINK );
+                    }
+
+                private void selectColor()
+                    {
+                        curColor = JColorChooser.showDialog( null,"Select color",Color.WHITE );
+                        button2.setBackground( curColor );
                     }
             }
 
@@ -122,6 +154,10 @@ public class MyFrameMix extends JFrame
                         if (e.getSource() == button1)
                             {
                                 panelDraw.fillBackground();
+                            }
+                        else if (e.getSource() == button2)
+                            {
+                                panelDraw.selectColor();
                             }
                     }
             }
