@@ -13,6 +13,7 @@ public class MyFrameMix extends JFrame
         JButton button2;
         MyShape tempShape;
         Color curColor;
+        JCheckBox checkBox1;
         ArrayList<MyShape> shapes = new ArrayList<>();
         int startX;
         int startY;
@@ -42,6 +43,11 @@ public class MyFrameMix extends JFrame
                 button2.addActionListener( new MyActionListener() );
                 panelButton.add( button2 );
 
+                checkBox1 = new JCheckBox("fill",false);
+                panelButton.add(checkBox1);
+
+
+
                 add( panelButton, BorderLayout.NORTH );
                 add( panelDraw, BorderLayout.SOUTH );
 
@@ -51,6 +57,7 @@ public class MyFrameMix extends JFrame
                 endY = 0;
 
                 curColor = Color.WHITE;
+
             }
 
         public class MyMouseAdapter extends MouseAdapter
@@ -99,18 +106,20 @@ public class MyFrameMix extends JFrame
 
         private MyShape getMyShape()
             {
-                return new MyShape( curColor,getFigure() );
+                return new MyShape();
             }
 
         private class MyShape
             {
                 Shape shape;
                 Color color;
+                Boolean isFill;
 
-                public MyShape(Color color, Shape shape)
+                public MyShape()
                     {
-                        this.color = color;
-                        this.shape = shape;
+                        this.color = curColor;
+                        this.shape = getFigure();
+                        this.isFill = checkBox1.isSelected();
                     }
             }
 
@@ -124,13 +133,28 @@ public class MyFrameMix extends JFrame
                         if (tempShape != null)
                             {
                                 g2.setColor( tempShape.color );
-                                g2.draw( tempShape.shape );
+                                if (tempShape.isFill)
+                                {
+                                    g2.fill( tempShape.shape );
+                                }
+                                else
+                                    {
+                                        g2.draw( tempShape.shape );
+                                    }
+
                             }
 
                         for (MyShape shape : shapes)
                             {
                                 g2.setColor( shape.color );
-                                g2.draw( shape.shape );
+                                if (shape.isFill)
+                                    {
+                                        g2.fill( shape.shape );
+                                    }
+                                else
+                                    {
+                                        g2.draw( shape.shape );
+                                    }
                             }
                     }
 
