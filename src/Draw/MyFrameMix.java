@@ -14,6 +14,7 @@ public class MyFrameMix extends JFrame
         MyShape tempShape;
         Color curColor;
         JCheckBox checkBox1;
+        JTextField jTextField;
         ArrayList<MyShape> shapes = new ArrayList<>();
         int startX;
         int startY;
@@ -43,9 +44,11 @@ public class MyFrameMix extends JFrame
                 button2.addActionListener( new MyActionListener() );
                 panelButton.add( button2 );
 
-                checkBox1 = new JCheckBox("fill",false);
-                panelButton.add(checkBox1);
+                checkBox1 = new JCheckBox( "fill", false );
+                panelButton.add( checkBox1 );
 
+                jTextField = new JTextField();
+                panelButton.add( jTextField );
 
 
                 add( panelButton, BorderLayout.NORTH );
@@ -129,24 +132,33 @@ public class MyFrameMix extends JFrame
                 public void paint( Graphics g )
                     {
                         Graphics2D g2 = (Graphics2D) g;
+                        String text = jTextField.getText();
+                        if (text.matches( "\\d+" ))
+                            {
+                                int lineWidth = Integer.parseInt( jTextField.getText() );
+                                if (lineWidth>0)
+                                    {
+                                        g2.setStroke( new BasicStroke(lineWidth) );
+                                    }
+                            }
 
                         if (tempShape != null)
                             {
                                 g2.setColor( tempShape.color );
                                 if (tempShape.isFill)
-                                {
-                                    g2.fill( tempShape.shape );
-                                }
+                                    {
+                                        g2.fill( tempShape.shape );
+                                    }
                                 else
                                     {
                                         g2.draw( tempShape.shape );
                                     }
-
                             }
 
                         for (MyShape shape : shapes)
                             {
                                 g2.setColor( shape.color );
+
                                 if (shape.isFill)
                                     {
                                         g2.fill( shape.shape );
@@ -165,7 +177,7 @@ public class MyFrameMix extends JFrame
 
                 private void selectColor()
                     {
-                        curColor = JColorChooser.showDialog( null,"Select color",Color.WHITE );
+                        curColor = JColorChooser.showDialog( null, "Select color", Color.WHITE );
                         button2.setBackground( curColor );
                     }
             }
