@@ -135,7 +135,7 @@ public class MyFrameMix extends JFrame
                         String text = jTextField.getText();
                         if (text.matches( "\\d+" ))
                             {
-                                int lineWidth = Integer.parseInt( jTextField.getText() );
+                                int lineWidth = Integer.parseInt( text );
                                 if (lineWidth>0)
                                     {
                                         g2.setStroke( new BasicStroke(lineWidth) );
