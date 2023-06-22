@@ -117,12 +117,17 @@ public class MyFrameMix extends JFrame
                 Shape shape;
                 Color color;
                 Boolean isFill;
+                int lineWidth;
 
                 public MyShape()
                     {
                         this.color = curColor;
                         this.shape = getFigure();
                         this.isFill = checkBox1.isSelected();
+
+                        this.lineWidth = 1;
+                        String text = jTextField.getText();
+                        if (text.matches( "\\d+" )) this.lineWidth = Integer.parseInt( text );
                     }
             }
 
@@ -145,6 +150,10 @@ public class MyFrameMix extends JFrame
                         if (tempShape != null)
                             {
                                 g2.setColor( tempShape.color );
+                                if (tempShape.lineWidth>0)
+                                    {
+                                        g2.setStroke( new BasicStroke(tempShape.lineWidth) );
+                                    }
                                 if (tempShape.isFill)
                                     {
                                         g2.fill( tempShape.shape );
@@ -158,6 +167,10 @@ public class MyFrameMix extends JFrame
                         for (MyShape shape : shapes)
                             {
                                 g2.setColor( shape.color );
+                                if (shape.lineWidth>0)
+                                    {
+                                        g2.setStroke( new BasicStroke(shape.lineWidth) );
+                                    }
 
                                 if (shape.isFill)
                                     {
