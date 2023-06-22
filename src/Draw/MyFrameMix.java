@@ -137,15 +137,6 @@ public class MyFrameMix extends JFrame
                 public void paint( Graphics g )
                     {
                         Graphics2D g2 = (Graphics2D) g;
-                        String text = jTextField.getText();
-                        if (text.matches( "\\d+" ))
-                            {
-                                int lineWidth = Integer.parseInt( text );
-                                if (lineWidth>0)
-                                    {
-                                        g2.setStroke( new BasicStroke(lineWidth) );
-                                    }
-                            }
 
                         if (tempShape != null)
                             {
