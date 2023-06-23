@@ -16,6 +16,7 @@ public class MyFrameMix extends JFrame
         JCheckBox checkBox1;
         JTextField jTextField;
         ArrayList<MyShape> shapes = new ArrayList<>();
+        JComboBox<String> jComboBox;
         int startX;
         int startY;
         int endX;
@@ -29,7 +30,7 @@ public class MyFrameMix extends JFrame
                 setDefaultCloseOperation( EXIT_ON_CLOSE );
 
                 JPanel panelButton = new JPanel();
-                panelButton.setLayout( new GridLayout( 1, 4 ) );
+                panelButton.setLayout( new GridLayout( 2, 4 ) );
 
                 panelDraw = new PanelDraw();
                 panelDraw.setPreferredSize( new Dimension( 600, 400 ) );
@@ -49,6 +50,10 @@ public class MyFrameMix extends JFrame
 
                 jTextField = new JTextField();
                 panelButton.add( jTextField );
+
+                String[] masSS = {"line", "rectangle", "oval", "arc"};
+                jComboBox = new JComboBox<>(masSS);
+                panelButton.add( jComboBox );
 
 
                 add( panelButton, BorderLayout.NORTH );
