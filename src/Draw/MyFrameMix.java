@@ -3,7 +3,10 @@ package Draw;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.geom.Arc2D;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 public class MyFrameMix extends JFrame
@@ -64,7 +67,7 @@ public class MyFrameMix extends JFrame
                 endX = 0;
                 endY = 0;
 
-                curColor = Color.WHITE;
+                curColor = Color.BLACK;
 
             }
 
@@ -108,8 +111,26 @@ public class MyFrameMix extends JFrame
                 int maxX = Math.max( startX, endX );
                 int maxY = Math.max( startY, endY );
 
-                Ellipse2D ellipse2D = new Ellipse2D.Double( minX, minY, maxX - minX, maxY - minY );
-                return ellipse2D;
+                String shapeType = jComboBox.getSelectedItem().toString();
+
+                if (shapeType.equals( "oval" ))
+                    {
+                        Ellipse2D ellipse2D = new Ellipse2D.Double( minX, minY, maxX - minX, maxY - minY );
+                        return ellipse2D;
+                    }
+                else if (shapeType.equals( "rectangle" ))
+                    {
+                        Rectangle2D rectangle2D = new Rectangle2D.Double( minX, minY, maxX - minX, maxY - minY );
+                        return rectangle2D;
+                    }
+                else if (shapeType.equals( "arc" ))
+                    {
+                        Arc2D arc2D = new Arc2D.Double( minX, minY, maxX - minX, maxY - minY , 0, 90 , Arc2D.PIE);
+                        return arc2D;
+                    }
+
+                Line2D line2D = new Line2D.Double(startX,startY,endX,endY);
+                return line2D;
             }
 
         private MyShape getMyShape()
