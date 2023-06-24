@@ -54,8 +54,8 @@ public class MyFrameMix extends JFrame
                 jTextField = new JTextField();
                 panelButton.add( jTextField );
 
-                String[] masSS = {"line", "rectangle", "oval", "arc"};
-                jComboBox = new JComboBox<>(masSS);
+                String[] masSS = { "line", "rectangle", "oval", "arc" };
+                jComboBox = new JComboBox<>( masSS );
                 panelButton.add( jComboBox );
 
 
@@ -111,26 +111,20 @@ public class MyFrameMix extends JFrame
                 int maxX = Math.max( startX, endX );
                 int maxY = Math.max( startY, endY );
 
-                String shapeType = jComboBox.getSelectedItem().toString();
-
-                if (shapeType.equals( "oval" ))
+                String shapeType = "";
+                if (jComboBox.getSelectedItem() != null)
                     {
-                        Ellipse2D ellipse2D = new Ellipse2D.Double( minX, minY, maxX - minX, maxY - minY );
-                        return ellipse2D;
-                    }
-                else if (shapeType.equals( "rectangle" ))
-                    {
-                        Rectangle2D rectangle2D = new Rectangle2D.Double( minX, minY, maxX - minX, maxY - minY );
-                        return rectangle2D;
-                    }
-                else if (shapeType.equals( "arc" ))
-                    {
-                        Arc2D arc2D = new Arc2D.Double( minX, minY, maxX - minX, maxY - minY , 0, 90 , Arc2D.PIE);
-                        return arc2D;
+                        shapeType = jComboBox.getSelectedItem().toString();
                     }
 
-                Line2D line2D = new Line2D.Double(startX,startY,endX,endY);
-                return line2D;
+                return switch (shapeType)
+                        {
+                            case "oval" -> new Ellipse2D.Double( minX, minY, maxX - minX, maxY - minY );
+                            case "rectangle" -> new Rectangle2D.Double( minX, minY, maxX - minX, maxY - minY );
+                            case "arc" -> new Arc2D.Double( minX, minY, maxX - minX, maxY - minY, 0, 90, Arc2D.PIE );
+                            default -> new Line2D.Double( startX, startY, endX, endY );
+                        };
+
             }
 
         private MyShape getMyShape()
@@ -153,7 +147,10 @@ public class MyFrameMix extends JFrame
 
                         this.lineWidth = 1;
                         String text = jTextField.getText();
-                        if (text.matches( "\\d+" )) this.lineWidth = Integer.parseInt( text );
+                        if (text.matches( "\\d+" ))
+                            {
+                                this.lineWidth = Integer.parseInt( text );
+                            }
                     }
             }
 
@@ -167,9 +164,9 @@ public class MyFrameMix extends JFrame
                         if (tempShape != null)
                             {
                                 g2.setColor( tempShape.color );
-                                if (tempShape.lineWidth>0)
+                                if (tempShape.lineWidth > 0)
                                     {
-                                        g2.setStroke( new BasicStroke(tempShape.lineWidth) );
+                                        g2.setStroke( new BasicStroke( tempShape.lineWidth ) );
                                     }
                                 if (tempShape.isFill)
                                     {
@@ -184,9 +181,9 @@ public class MyFrameMix extends JFrame
                         for (MyShape shape : shapes)
                             {
                                 g2.setColor( shape.color );
-                                if (shape.lineWidth>0)
+                                if (shape.lineWidth > 0)
                                     {
-                                        g2.setStroke( new BasicStroke(shape.lineWidth) );
+                                        g2.setStroke( new BasicStroke( shape.lineWidth ) );
                                     }
 
                                 if (shape.isFill)
