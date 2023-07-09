@@ -8,14 +8,14 @@ public class Task139
                 System.out.println(myRectangle1.getArea());
 
                 MyRectangle myRectangle2 = new MyRectangle();
-                myRectangle1.setWidth( 1.13 );
-                myRectangle1.setHeight( 80.9 );
-                System.out.println(myRectangle1.getArea());
+                myRectangle2.setWidth( 1.13 );
+                myRectangle2.setHeight( 80.9 );
+                System.out.println(myRectangle2.getArea());
 
                 MyRectangle myRectangle3 = new MyRectangle();
-                myRectangle1.setWidth( 15.0 );
-                myRectangle1.setHeight( 10.0 );
-                System.out.println(myRectangle1.getArea());
+                myRectangle3.setWidth( 15.0 );
+                myRectangle3.setHeight( 10.0 );
+                System.out.println(myRectangle3.getArea());
             }
     }
 
