@@ -2,7 +2,8 @@ public class Task149
     {
         public static void main( String[] args )
             {
-                for (int i = 1; i < 21; i++)
+                int i = 1;
+                while (++i<=20)
                     {
                         if (i%2==1) continue;
 
