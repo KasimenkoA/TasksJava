@@ -12,7 +12,7 @@ public class Task157
 
                 for (String ss: mas)
                     {
-                        System.out.println(ss);
+                        System.out.println(ss.toUpperCase());
                     }
             }
     }
