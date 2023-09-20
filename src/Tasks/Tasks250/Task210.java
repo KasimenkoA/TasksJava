@@ -14,6 +14,11 @@ public class Task210
                 System.out.print("¬ведите ваш возраст: ");
                 String ss2 = scanner.nextLine();
 
+                showInfo(ss1,ss2);
+            }
+
+        private static void showInfo( String ss1, String ss2 )
+            {
                 System.out.printf("¬ас зовут %s, вам %s лет.", ss1,ss2);
             }
     }
