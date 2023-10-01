@@ -15,6 +15,21 @@ class Fox
             }
     }
 
+class SuperFox extends Fox
+    {
+        public SuperFox( String name )
+            {
+                super( name );
+            }
+
+        @Override
+        public void showInfo()
+            {
+                super.showInfo();
+                System.out.println("I am super Fox!");
+            }
+    }
+
 public class Task217
     {
         public static void main( String[] args )
@@ -26,5 +41,14 @@ public class Task217
                 fox1.showInfo();
                 fox2.showInfo();
                 fox3.showInfo();
+
+                System.out.println();
+                SuperFox sfox1 = new SuperFox( "Elza" );
+                SuperFox sfox2 = new SuperFox( "Nata" );
+                SuperFox sfox3 = new SuperFox( "Mura" );
+
+                sfox1.showInfo();
+                sfox2.showInfo();
+                sfox3.showInfo();
             }
     }
