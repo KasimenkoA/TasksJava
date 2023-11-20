@@ -34,12 +34,51 @@ class Gamer254
 
 public class Task254
     {
+        static int getWinNumber( String tt1, String tt2 )
+            {
+                if ( tt1.equals( "stone" ) )
+                    {
+                        if ( tt2.equals( "scissors" ) ) return 1;
+                        if ( tt2.equals( "paper" ) ) return 2;
+                    }
+                else if ( tt1.equals( "scissors" ) )
+                    {
+                        if ( tt2.equals( "stone" ) ) return 2;
+                        if ( tt2.equals( "paper" ) ) return 1;
+                    }
+                else // "paper"
+                    {
+                        if ( tt2.equals( "stone" ) ) return 1;
+                        if ( tt2.equals( "scissors" ) ) return 2;
+                    }
+
+                return 0; // tt1.equals( tt2 )
+            }
+
         public static void main( String[] args )
             {
                 Gamer254 gamer1 = new Gamer254( "Tom" );
                 Gamer254 gamer2 = new Gamer254( "Bob" );
 
-                System.out.println(gamer1.getName() + " - " + gamer1.getThing());
-                System.out.println(gamer2.getName() + " - " + gamer2.getThing());
+                String tt1 = gamer1.getThing();
+                String tt2 = gamer2.getThing();
+
+                System.out.println(gamer1.getName() + " - " + tt1);
+                System.out.println(gamer2.getName() + " - " + tt2);
+
+                int winNumber = getWinNumber(tt1, tt2);
+
+                if (winNumber == 1)
+                    {
+                        System.out.println("Gamer " + gamer1.getName() + " won!");
+                    }
+                else if (winNumber == 2)
+                    {
+                        System.out.println("Gamer " + gamer2.getName() + " won!");
+                    }
+                else
+                    {
+                        System.out.println("Draw!");
+                    }
             }
     }
