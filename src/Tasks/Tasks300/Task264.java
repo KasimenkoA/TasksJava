@@ -30,9 +30,7 @@ public class Task264
         public static void main( String[] args )
             {
                 ArrayList<Plane264> arrayList = new ArrayList<>();
-                int nn;
                 Random random = new Random();
-                nn = random.nextInt(1);
 
                 for (int i = 1; i < 11; i++)
                     {
