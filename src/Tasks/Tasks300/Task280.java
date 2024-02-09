@@ -23,18 +23,18 @@ public class Task280
                             nn = random.nextInt(36);
                             ss += cards[nn];
 
-                            if (ss > 21) {
+                            if (ss > 20) {
                                 ss = 0;
                                 continue;
                             }
 
-                            if ((ss + mm) > 21) break;
+                            if ((ss + mm) > 20) break;
                         }
                         System.out.println(ss);
                         sum_ss += ss;
                     }
 
                 mat_exp = sum_ss/1000;
-                System.out.println("Mathematical expectation: " + mat_exp); // 17.5
+                System.out.println("Mathematical expectation: " + mat_exp); // 16.5
             }
     }
