@@ -49,5 +49,32 @@ public class Task282
                         System.out.println("Color: " + cc_str + ", Weight: " + ww);
                         list.add( new Pearl( cc_str,ww ) );
                     }
+
+                int ww_count = 0;
+                int bb_count = 0;
+                Double ww_sum = 0.0;
+                Double bb_sum = 0.0;
+
+                for (Pearl pearl : list)
+                    {
+                        if (pearl.getColor().equals( "white" ))
+                            {
+                                ww_count++;
+                                ww_sum += pearl.getWeight();
+                            }
+                        else
+                            {
+                                bb_count++;
+                                bb_sum += pearl.getWeight();
+                            }
+                    }
+
+                long ww_avg = Math.round( ww_sum/ww_count );
+                long bb_avg = Math.round( bb_sum/ww_count );
+
+                System.out.println("White sum: " + ww_sum);
+                System.out.println("Black sum: " + bb_sum);
+                System.out.println("White avg: " + ww_avg);
+                System.out.println("Black avg: " + bb_avg);
             }
     }
